@@ -2,7 +2,6 @@
 title: "R script social media for flower paper, AGEE Klaus et al. 2025"
 date: '2025-05-22'
 Question: abdesslam.chaiallah@gmail.com
-output: pdf_document
 ---
 This R script includes and describes:
 1. Data collection from Flickr and iNaturalist in Switzerland;
