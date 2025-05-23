@@ -1,14 +1,9 @@
----
-title: "R script social media for flower paper, AGEE Klaus et al. 2025"
-date: '2025-05-22'
-Question: abdesslam.chaiallah@gmail.com
----
-This R script includes and describes:
-1. Data collection from Flickr and iNaturalist in Switzerland;
-2. Content analysis of images using the Google Cloud Vision algorithm for label and object analysis.
-3. Visualization of the results
+#This R script includes and describes:
+#1. Data collection from Flickr and iNaturalist in Switzerland;
+#2. Content analysis of images using the Google Cloud Vision algorithm for label and object analysis.
+#3. Visualization of the results
 
-Package installation
+#Package installation
 
 ```{r}
 packages <- c("tidyverse", "dplyr", "pacman", "dplyr", "tibble", "ggplot2",
@@ -24,7 +19,7 @@ library(package, character.only = TRUE)
 })
 ```
 
-1. Data collection 
+#1. Data collection 
 ```{r}
 #Flickr : the principal package is photosearcher from the paper of Fox et al. 2020 
 #PLEASE GET THE API KEY FROM fLICKR AND STORE IT YOUR DIRECTORY BEFORE RUNNING THE CODE
@@ -50,9 +45,9 @@ unique_imageiNaturalist <- iNaturalist_image %>%
 ```
 
 
-2. Google Cloud Vision (label analysis)
-To run this part, you will need a google vision API, check this link for more informations on how to get a key for free :https://cloud.google.com/vision
-Wu used this algo twice in the paper, first for the label analysis to extract only those images showing nature and natural objects (see section 2.3.2. Extraction of objects from images) and after the object analysis to extract the species without diving into a taxonomic analysis.
+#2. Google Cloud Vision (label analysis)
+#To run this part, you will need a google vision API, check this link for more informations on how to get a key for free :https://cloud.google.com/vision
+#We used this algo twice in the paper, first for the label analysis to extract only those images showing nature and natural objects (see section 2.3.2. Extraction of objects from images) and after the object analysis to extract the species without diving into a taxonomic analysis.
 ```{r}
 #set up gvision
 Sys.setenv(gvision_key = "your key") #Your Google API Key
@@ -71,7 +66,7 @@ vision_results <- img_data$labels
 
 ```
 
-Data analysis of the results of Google Cloud Vision for labels to classify images to Nature vs non Nature images, and from nature images we selected images focusing on species. We followed here the paper of Chai-allah et al. 2025.
+#Data analysis of the results of Google Cloud Vision for labels to classify images to Nature vs non Nature images, and from nature images we selected images focusing on species. We followed here the paper of Chai-allah et al. 2025.
 ```{r}
 #Data cleaning by platform
 #Turn labels into lower case
@@ -138,9 +133,8 @@ flickrGRASSLAND <- speciesIMAGES_flickr %>%
   distinct(image_url,owner, datetaken, imageNature, imageSpecies, platform)
 ```
 
-After this step by selecting species images with grasslans labels, we used Google Cloud Vision for the second time, this time the goal is detect objects. This feature has better capabilities
-to accurately detect the species present in the images compared to the “label” feature
-(https://cloud.google.com/vision/docs/features-list).
+#After this step by selecting species images with grasslans labels, we used Google Cloud Vision for the second time, this time the goal is detect objects. This feature has better capabilities
+#to accurately detect the species present in the images compared to the “label” feature (https://cloud.google.com/vision/docs/features-list).
 
 ```{r}
 #GOOGLE VISION OBJECT FROM species IMAGES with grass labels
@@ -199,9 +193,8 @@ Unique_objects_Flickr <- update_objects_Final_Flickr %>%
 ```
 
 
-3. Visualization of the results. In this part, the scripts used to plat the results, including the taxonomy analysis done in PYTHON that you can find in the repository.
-
-Graph 1 about the "Frequent objects in grassland images" see section 3.3 in the results.
+#3. Visualization of the results. In this part, the scripts used to plat the results, including the taxonomy analysis done in PYTHON that you can find in the repository.
+#Graph 1 about the "Frequent objects in grassland images" see section 3.3 in the results.
 
 ```{r}
 # SELECT TOP 10 OBJECTS BASED ON FREQUENCY for FLICKR AND INATURALIST
@@ -257,8 +250,7 @@ plot_grid(flickr_GCV_plt, inatu_GCV_plt,
 ggsave(filename='objectsGCV.png',device='png',
        width=11, height=10, dpi=400, bg="white")
 ```
-
-Graph 2 about the "The 20 most frequently photographed familiae in Flickr and iNaturalist wildlife images". See section 3.4 in the results.
+#Graph 2 about the "The 20 most frequently photographed familiae in Flickr and iNaturalist wildlife images". See section 3.4 in the results.
 
 ```{r}
 # SELECT TOP 20 familiae BASED ON FREQUENCY for FLICKR AND INATURALIST
@@ -340,8 +332,7 @@ ggsave(filename='familyPLOT.png',device='png',
        width=15, height=12, dpi=400, bg="white")
 
 ```
-
-Graph 3 about the "The 20 most frequently photographed genera in Flickr and iNaturalist wildlife images". See section 3.4 in the results.
+#Graph 3 about the "The 20 most frequently photographed genera in Flickr and iNaturalist wildlife images". See section 3.4 in the results.
 
 ```{r}
 
